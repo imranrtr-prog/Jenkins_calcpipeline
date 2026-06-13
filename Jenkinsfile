@@ -3,43 +3,35 @@ pipeline {
     agent any
     
     stages {
-        stage('clone repository') { // Open stage brace
+        stage('Clone Repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/imranrtr-prog/Jenkins_calcpipeline.git'
             }
-        } // Close stage brace
+        }
 
-        stage('check python version') { // Open stage brace
+        stage('Check Python Version') {
             steps {
                 sh 'python3 --version'
             }
-        } // Close stage brace
+        }
 
-        stage('Create virtual environment') { // Open stage brace
+        stage('Setup Environment & Dependencies') {
             steps {
-                sh 'python3 -m venv venv'
-            }
-        } // Close stage brace
-
-        stage('install dependencies') { // Open stage brace
-            steps {
+                // Create environment and upgrade pip/install dependencies in one go
                 sh '''
                     python3 -m venv venv
-                    . venv/bin/activate
-                    pip install --upgrade pip
-                    pip install -r requirements.txt
+                    ./venv/bin/pip install --upgrade pip
+                    ./venv/bin/pip install -r requirements.txt
                 '''
             }
-        } // Close stage brace
+        }
 
-        stage(' Run test cases') { // Open stage brace
+        stage('Run Test Cases') {
             steps {
-                sh '''
-                    . venv/bin/activate
-                    pytest test_calculator.py
-                '''
+                // Call pytest directly from the virtual environment bin folder
+                sh './venv/bin/pytest test_calculator.py'
             }
-        } // Close stage brace
+        }
     }
     
     post {
@@ -51,4 +43,3 @@ pipeline {
         }
     }   
 }
-
