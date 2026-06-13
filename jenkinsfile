@@ -5,7 +5,7 @@ pipeline{
         stage('clone repository')
         steps{
             git branch: 'main'
-            url: 'git repository url'
+            url: 'https://github.com/imranrtr-prog/Jenkins_calcpipeline.git'
     
         }
         stage('check python version')
