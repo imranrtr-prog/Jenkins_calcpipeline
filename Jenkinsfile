@@ -1,4 +1,4 @@
-# tutorials to create a jenkins pipeline for a python project
+// tutorials to create a jenkins pipeline for a python project
 pipeline{
     agent any
     stages{
